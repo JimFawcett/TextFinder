@@ -1,0 +1,24 @@
+Build.txt - how to build TextFinder solution and its projects
+=====================================================================
+1. Executive project
+   - Set as startup and ensure that its references have been built as static libraries.
+2. Building static libraries
+    - Each of the projects listed below, open project properties and select:
+      - General > Configuration Type > Static Library
+      - C/C++ > Preprocessor Definitions > change TEST_[PROJECTNAME] to noTEST_[PROJECTNAME] 
+        to disable compilation of main function
+    - Then right-click project and select Build
+    - You can run each project's construction test by restoring TEST_[PROJECTNAME]
+
+    DirExplorer-Template
+      Supports navigation of specified directory tree
+    Executive:
+      Entry point for program, directs processing flow
+    FileSystem:
+      Supports finding files and manipulating paths
+    TextSearch:
+      Searches specified file for text that matches a regular expression
+
+    RegExDemo
+      Not part of this application.  It serves as a reminder of how to use
+      C++11 regular expressions.
