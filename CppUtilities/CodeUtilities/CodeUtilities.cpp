@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////
 // CodeUtilities.cpp - small, generally useful, helper classes       //
-// ver 1.3                                                           //
+// ver 1.4                                                           //
 // Language:    C++, Visual Studio 2017                              //
 // Application: Most Projects, CSE687 - Object Oriented Design       //
 // Author:      Jim Fawcett, Syracuse University, CST 4-187          //
@@ -25,11 +25,14 @@ int main(int argc, char* argv[])
   title("Testing ProcessCmdLine");
   ProcessCmdLine pcl(argc, argv);
   pcl.usage();
+  pcl.process();
 
   preface("Command Line: "); pcl.showCmdLine(argc, argv);
   preface("path:     "); pcl.showPath();
   preface("Options:  "); pcl.showOptions();
   preface("Patterns: "); pcl.showPatterns();
+  preface("Rexex:    "); pcl.showRegex();
+  preface("LogFile:  "); pcl.showLogFile();
   preface("MaxItems: "); pcl.showMaxItems();
   std::cout << "\n";
 
@@ -50,7 +53,7 @@ int main(int argc, char* argv[])
   pcl.showMaxItems();
   putline();
   preface("new command line: ");
-  pcl.showCmdLine();
+  pcl.showParse();
   putline();
 
   title("Testing Box and PersistFactory");
