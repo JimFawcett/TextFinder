@@ -112,6 +112,21 @@ int main(int argc, char* argv[])
     return 1;
   }
 
+  std::ofstream log;
+  if (pcl.logFile() != "")
+  {
+    log.open(pcl.logFile());
+    if (!log.good())
+    {
+      std::cout << "\n  can't open logfile \"" << pcl.logFile() << "\"\n\n";
+      return 1;
+    }
+    else
+    {
+      std::cout << "\n  opened logfile \"" << pcl.logFile() << "\"\n";
+    }
+  }
+
   std::string path = pcl.path();
   DirExplorerT<Application> de(path);
   de.recurse(true);
@@ -121,6 +136,8 @@ int main(int argc, char* argv[])
   de.app().searchText(pcl.regex());
   if (pcl.hasOption('H'))
     de.app().hideDirNoMatch();
+  if (pcl.logFile() != "")
+    de.app().logFile(pcl.logFile());
   de.search();
 
   std::cout << "\n\n";

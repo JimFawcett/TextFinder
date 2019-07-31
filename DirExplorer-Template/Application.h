@@ -27,6 +27,7 @@
 *    as DirExplorerT.
 */
 #include <iostream>
+#include <fstream>
 #include <string>
 #include "../TextSearch/TextSearch.h"
 
@@ -57,16 +58,30 @@ public:
     if (hideDir_ == false)
     {
       std::cout << "\n  " << fullSpec;
+      if (logStream_.good())
+        logStream_ << "\n  " << fullSpec;
+
     }
     if (ts_.open(fullSpec) && ts_.find(text_))
     {
       if(hideDir_ == true)
       {
         std::cout << "\n  " << fullSpec;
+        if (logStream_.good())
+          logStream_ << "\n  " << fullSpec;
       }
       std::cout << "\n    found \"" << text_ << "\"\n";
+      if(logStream_.good())
+        logStream_ << "\n    found \"" << text_ << "\"\n";
       ts_.close();
     }
+  }
+  //----< set log file >---------------------------------------------
+
+  void logFile(const std::string& logfile)
+  {
+    logFile_ = logfile;
+    logStream_.open(logFile_);
   }
   //----< ignore DirExplorer maxItems_ for current directory >-------
 
@@ -80,10 +95,19 @@ public:
   {
     return false;
   }
+  //----< close log >------------------------------------------------
+
+  ~Application()
+  {
+    if(logStream_.good())
+      logStream_.close();
+  }
 private:
   TextSearch ts_;
   bool showAll_ = false;
   std::string currDir_ = "";
   std::string text_ = "";
   bool hideDir_ = false;
+  std::string logFile_ = "";
+  std::ofstream logStream_;
 };
