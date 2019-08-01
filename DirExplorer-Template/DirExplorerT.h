@@ -45,7 +45,7 @@
 */
 #include <vector>
 #include "../FileSystem/FileSystem.h"
-#include "Application.h"
+#include "../Application-SingleThread/Application.h"
 
 namespace FileSystem
 {
@@ -57,8 +57,10 @@ namespace FileSystem
 
     static std::string version() { return "ver 1.2"; }
 
+    DirExplorerT();
     DirExplorerT(const std::string& path);
 
+    void path(const std::string& path);
     DirExplorerT<App>& addPattern(const std::string& patt);
     void hideEmptyDirectories(bool hide);
     void maxItems(size_t numFiles);
@@ -78,7 +80,7 @@ namespace FileSystem
 
   private:
     Application app_;
-    std::string path_;
+    std::string path_ = ".";
     patterns patterns_;
     bool hideEmptyDir_ = false;
     bool showAll_ = false;      // show files in current dir even if maxItems_ has been exceeded
@@ -88,12 +90,26 @@ namespace FileSystem
     bool recurse_ = false;
   };
 
-  //----< construct DirExplorerN instance with default pattern >-----
+  //----< construct DirExplorerN with path and default pattern >-----
+
+  template<typename App>
+  DirExplorerT<App>::DirExplorerT()
+  {
+    patterns_.push_back("*.*");
+  }
+  //----< construct DirExplorerN with path and default pattern >-----
 
   template<typename App>
   DirExplorerT<App>::DirExplorerT(const std::string& path) : path_(path)
   {
     patterns_.push_back("*.*");
+  }
+  //----< reset starting path >--------------------------------------
+
+  template <typename App>
+  void DirExplorerT<App>::path(const std::string& path)
+  {
+    path_ = path;
   }
   //----< add specified patterns for selecting file names >----------
 

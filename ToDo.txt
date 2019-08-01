@@ -1,0 +1,10 @@
+=====================================================================
+  ToDo.txt
+=====================================================================
+1. Invert meaning of /s from recurse to single dir, so recursion 
+   is default
+   - changes in both ProcessCmdLine and TextFinder
+2. Update Utilities with the new CppUtilities files
+3. Add WPF GUI that spawns TextFinder with specified options
+4. Add solution for TextFinder-Pipeline
+5. Add solution for TextFinder-Parallel

@@ -1,0 +1,57 @@
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\CodeUtilities\CodeUtilities.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\DateTime\DateTime.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\DirExplorer-Events\DirExplorerE.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\DirExplorer-Template\Application.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\DirExplorer-Template\DirExplorerT.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\FileSystem\FileSystem.h
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\FileSystem\FileSystem.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\old\SingletonLogger-old\CppDateTime\DateTime.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\SingletonLogger\SingletonLogger.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\StringUtilities\StringUtilities.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\TestUtilities\TestUtilities.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\CppUtilities\WindowsHelpers\WindowsHelpers.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\DirExplorer-Template\DirExplorerT.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\Executive-SingleThread\TextFinder.h
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\Executive-SingleThread\TextFinder.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\FileSystem\FileSystem.h
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\FileSystem\FileSystem.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\RegExDemo\RegExDemo.cpp
+    found "TEST_|<regex>"
+
+  C:\github\JimFawcett\TextFinder\TextSearch\TestSearch.cpp
+    found "TEST_|<regex>"
