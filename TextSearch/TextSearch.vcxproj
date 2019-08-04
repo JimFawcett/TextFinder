@@ -155,7 +155,7 @@
     <ClInclude Include="TextSearch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TestSearch.cpp" />
+    <ClCompile Include="TextSearch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FileSystem\FileSystemDemo.vcxproj">

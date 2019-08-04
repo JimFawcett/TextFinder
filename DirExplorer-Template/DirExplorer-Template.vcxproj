@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_MBCS;noTEST_APPLICATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MBCS;noTEST_DIREXPLORERT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,6 +124,7 @@
     <ClInclude Include="DirExplorerT.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Application-SingleThread\Application.cpp" />
     <ClCompile Include="..\FileSystem\FileSystem.cpp" />
     <ClCompile Include="DirExplorerT.cpp" />
   </ItemGroup>

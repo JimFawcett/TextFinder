@@ -37,6 +37,12 @@
 *
 * Maintenance History:
 * --------------------
+* ver 1.3 : 04 Aug 2019
+* - added Utilities::ProcessCmdLine pcl data member
+* - removed states duplicated in pcl
+* - modified several member functions to accomodate this change
+* ver 1.2 : 31 Jul 2019
+* - changed hidding code
 * ver 1.1 : 16 Aug 2018
 * - made no recursion default, added option /s for recursion
 * ver 1.0 : 11 Aug 2018
@@ -46,6 +52,7 @@
 #include <vector>
 #include "../FileSystem/FileSystem.h"
 #include "../Application-SingleThread/Application.h"
+#include "../CppUtilities/CodeUtilities/CodeUtilities.h"
 
 namespace FileSystem
 {
@@ -53,15 +60,18 @@ namespace FileSystem
   class DirExplorerT
   {
   public:
-    using patterns = std::vector<std::string>;
+    using Pattern = std::string;
+    using Patterns = std::vector<std::string>;
 
-    static std::string version() { return "ver 1.2"; }
+    static std::string version() { return "ver 1.3"; }
 
     DirExplorerT();
     DirExplorerT(const std::string& path);
 
     void path(const std::string& path);
     DirExplorerT<App>& addPattern(const std::string& patt);
+    void patterns(const Patterns& patts);
+    Patterns& patterns();
     void hideEmptyDirectories(bool hide);
     void maxItems(size_t numFiles);
     void showAllInCurrDir(bool showAllCurrDirFiles);
@@ -77,20 +87,41 @@ namespace FileSystem
     size_t dirCount();
 
     Application& app() { return app_; }
+    Utilities::ProcessCmdLine& pcl();
+    void pcl(Utilities::ProcessCmdLine& pcl);
 
   private:
     Application app_;
-    std::string path_ = ".";
-    patterns patterns_;
+    Utilities::ProcessCmdLine pcl_;
+    Patterns patterns_;
     bool hideEmptyDir_ = false;
     bool showAll_ = false;      // show files in current dir even if maxItems_ has been exceeded
-    size_t maxItems_ = 0;
     size_t dirCount_ = 0;
     size_t fileCount_ = 0;
-    bool recurse_ = false;
   };
+  //----< return reference to internal pcl instance >----------------
 
-  //----< construct DirExplorerN with path and default pattern >-----
+  template<typename App>
+  Utilities::ProcessCmdLine& DirExplorerT<App>::pcl()
+  {
+    return pcl_;
+  }
+  //----< copy options from pcl arg to internal pcl instance >-------
+
+  template<typename App>
+  void DirExplorerT<App>::pcl(Utilities::ProcessCmdLine& pcl)
+  {
+    for (auto opt : pcl.options())
+    {
+      pcl_.options()[opt.first] = opt.second;
+    }
+    for (auto patt : pcl.patterns())
+    {
+      addPattern(patt);
+      pcl_.pattern(patt);
+    }
+  }
+  //----< construct DirExplorerN with default pattern >--------------
 
   template<typename App>
   DirExplorerT<App>::DirExplorerT()
@@ -100,8 +131,9 @@ namespace FileSystem
   //----< construct DirExplorerN with path and default pattern >-----
 
   template<typename App>
-  DirExplorerT<App>::DirExplorerT(const std::string& path) : path_(path)
+  DirExplorerT<App>::DirExplorerT(const std::string& path)
   {
+    pcl_.path(path);
     patterns_.push_back("*.*");
   }
   //----< reset starting path >--------------------------------------
@@ -109,7 +141,7 @@ namespace FileSystem
   template <typename App>
   void DirExplorerT<App>::path(const std::string& path)
   {
-    path_ = path;
+    pcl_.options()['P'] = path;
   }
   //----< add specified patterns for selecting file names >----------
 
@@ -120,6 +152,23 @@ namespace FileSystem
       patterns_.pop_back();
     patterns_.push_back(patt);
     return *this;
+  }
+  //----< return reference to patterns >-----------------------------
+
+  template<typename App>
+  typename DirExplorerT<App>::Patterns& DirExplorerT<App>::patterns()
+  {
+    return patterns_;
+  }
+  //----< copy a specified set of patterns >-------------------------
+
+  template<typename App>
+  void DirExplorerT<App>::patterns(const Patterns& patts)
+  {
+    for (auto pat : patts)
+    {
+      addPattern(pat);
+    }
   }
   //----< set option to hide empty directories >---------------------
 
@@ -133,8 +182,8 @@ namespace FileSystem
   template<typename App>
   void DirExplorerT<App>::maxItems(size_t numFiles)
   {
-    maxItems_ = numFiles;
-    app_.maxItems(maxItems_);
+    pcl_.options()['n'] = std::to_string(numFiles);
+    app_.maxItems(numFiles);
   }
   //----< stop display before showing all files in dir >-------------
 
@@ -155,9 +204,12 @@ namespace FileSystem
   template<typename App>
   void DirExplorerT<App>::recurse(bool doRecurse)
   {
-    recurse_ = doRecurse;
+    if (doRecurse)
+      pcl_.options()['r'] = "";
+    else
+      pcl_.options().erase('r');
   }
-  //----< start Depth First Search at path held in path_ >-----------
+  //----< start Depth First Search at path in options >--------------
 
   template<typename App>
   void DirExplorerT<App>::search()
@@ -165,7 +217,7 @@ namespace FileSystem
     if (showAllInCurrDir())
       app_.showAllInCurrDir(true);
 
-    find(path_);
+    find(pcl_.options()['P']);
   }
   //----< search for directories and their files >-------------------
   /*
@@ -175,6 +227,7 @@ namespace FileSystem
   template<typename App>
   void DirExplorerT<App>::find(const std::string& path)
   {
+    ++dirCount_;
     if (done())  // stop searching
       return;
 
@@ -196,6 +249,7 @@ namespace FileSystem
       }
       for (auto f : files)
       {
+        ++fileCount_;
         app_.doFile(f);
       }
     }
@@ -210,7 +264,7 @@ namespace FileSystem
       if (d == "." || d == "..")
         continue;
       std::string dpath = fpath + "\\" + d;
-      if (recurse_)
+      if (pcl_.hasOption('s'))
       {
         find(dpath);
       }
@@ -225,26 +279,29 @@ namespace FileSystem
   template<typename App>
   size_t DirExplorerT<App>::fileCount()
   {
-    return App.fileCount();
+    return fileCount_;
   }
   //----< return number of directories processed >-------------------
 
   template<typename App>
   size_t DirExplorerT<App>::dirCount()
   {
-    return App.dirCount();
+    return dirCount;
   }
   //----< show final counts for files and dirs >---------------------
 
   template<typename App>
   void DirExplorerT<App>::showStats()
   {
-    app_.showStats();
+    std::cout << "\n  Processed " << fileCount_ << " files";
+    std::cout << "\n  Processed " << dirCount_ << " directories";
   }
 
   template<typename App>
   bool DirExplorerT<App>::done()
   {
-    return app_.done();
+    if(pcl_.hasOption('n'))
+      return dirCount_ >= stoul(pcl_.options()['n']);
+    return false;
   }
 }

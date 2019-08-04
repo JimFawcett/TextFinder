@@ -11,14 +11,14 @@
 #ifdef TEST_DIREXPLORERT  // only compile the following when defined
 
 #include "DirExplorerT.h"
-#include "../Utilities/StringUtilities/StringUtilities.h"
-#include "../Utilities/CodeUtilities/CodeUtilities.h"
+#include "../CppUtilities/StringUtilities/StringUtilities.h"
+#include "../CppUtilities/CodeUtilities/CodeUtilities.h"
 #include <iostream>
 
 using namespace Utilities;
 using namespace FileSystem;
 
-ProcessCmdLine::Usage customUsage()
+std::string customUsage()
 {
   std::string usage;
   usage += "\n  Command Line: path [/option]* [/pattern]*";
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
   pcl.usage(customUsage());
 
   preface("Command Line: ");
-  pcl.showCmdLine();
+  pcl.showCmdLine(argc, argv);
   putline();
 
   if (pcl.parseError())
@@ -51,7 +51,8 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  DirExplorerT<Application> de(pcl.path());
+  DirExplorerT<Application> de;
+  de.pcl(pcl);
 
   for (auto patt : pcl.patterns())
   {

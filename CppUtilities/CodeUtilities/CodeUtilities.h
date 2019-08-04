@@ -1,7 +1,7 @@
 #pragma once
 ///////////////////////////////////////////////////////////////////////
 // CodeUtilities.h - small, generally useful, helper classes         //
-// ver 1.5                                                           //
+// ver 1.7                                                           //
 // Language:    C++, Visual Studio 2017                              //
 // Application: Most Projects, CSE687 - Object Oriented Design       //
 // Author:      Jim Fawcett, Syracuse University, CST 4-187          //
@@ -23,6 +23,10 @@
 *
 * Maintenance History:
 * --------------------
+* ver 1.7 : 04 Aug 2019
+* - replaced local option storage with pcl object
+* ver 1.6 : 01 Aug 2019
+* - converted options storage to std::unordered_map
 * ver 1.5 : 02 Jul 2019
 * - added capturing name of log file from command line option /F logfile.txt
 * ver 1.4 : 25 Jun 2019
@@ -54,6 +58,7 @@
 */
 
 #include <vector>
+#include <unordered_map>
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -61,15 +66,6 @@
 
 namespace Utilities
 {
-  /////////////////////////////////////////////////////////////////////
-  // preface function
-  // - used to add a string preface to an output, e.g., "\n  "
-
-  inline void preface(const std::string& msg = "", bool doReturn = true, std::ostream& out = std::cout, const std::string& prefix = "  ")
-  {
-    if (doReturn) out << "\n" << prefix << msg;
-  }
-
   /////////////////////////////////////////////////////////////////////
   // ProcessCmdLine class
   // - extracts path, patterns, options, number
@@ -79,7 +75,9 @@ namespace Utilities
   public:
     using Path = std::string;
     using Option = char;
-    using Options = std::vector<Option>;
+    using OptionValue = std::string;
+    using Options = std::unordered_map<Option, OptionValue>;
+    using iterator = std::unordered_map<Option, OptionValue>::iterator;
     using Pattern = std::string;
     using Patterns = std::vector<Pattern>;
     using Regex = std::string;
@@ -89,11 +87,12 @@ namespace Utilities
     ProcessCmdLine(int argc, char** argv, std::ostream& out = std::cout);
     ProcessCmdLine() : pOut_(&std::cout) {};
     void process();
+    void process(int argc, char** argv);
     bool parseError();
     Path path();
     void path(const Path& path);
-    Options options();
-    void option(Option op);
+    Options& options();
+    void option(Option op, OptionValue val = "");
     bool hasOption(Option op);
     Patterns patterns();
     void pattern(const Pattern& patt);
@@ -117,63 +116,64 @@ namespace Utilities
     void defaultUsageMessage();
     int argc_ = 0;
     char** argv_ = nullptr;
-    Path path_ = "";
     Patterns patterns_ = Patterns();
     Options options_ = Options();
-    int maxItems_ = 0;
-    Regex regex_ = "";
-    LogFile logFile_ = "";
     bool parseError_ = false;
     std::ostream* pOut_;
     std::ostringstream msg_ = std::ostringstream();
   };
 
+  /////////////////////////////////////////////////////////////////////
+  // preface function
+  // - used to add a string preface to an output, e.g., "\n  "
+
+  inline void preface(const std::string& msg = "", bool doReturn = true, std::ostream& out = std::cout, const std::string& prefix = "  ")
+  {
+    if (doReturn) out << "\n" << prefix << msg;
+  }
+
   /*----< path operations >------------------------------------------*/
 
   inline void ProcessCmdLine::path(const Path& path) 
   { 
-    path_ = path; 
+    options_['P'] = path;
   }
 
   inline ProcessCmdLine::Path ProcessCmdLine::path()
   {
-    if (path_ == "")
-      path_ = ".";
-    return path_;
+    iterator iter = options_.find('P');
+    if (iter == options_.end())
+      return ".";
+    return iter->second;
   }
 
   inline void ProcessCmdLine::showPath()
   {
-    *pOut_ << path_ << " ";
+    *pOut_ << path() << " ";
   }
 
   /*----< options operations >---------------------------------------*/
 
-  inline void ProcessCmdLine::option(Option option)
+  inline void ProcessCmdLine::option(Option option, OptionValue optionValue)
   {
-    options_.push_back(option);
+    options_[option] = optionValue;
   }
 
-  inline ProcessCmdLine::Options ProcessCmdLine::options()
+  inline ProcessCmdLine::Options& ProcessCmdLine::options()
   { 
-    if (options_.size() == 0)
-      options_.push_back('f');
     return options_; 
   }
 
   inline bool ProcessCmdLine::hasOption(Option opt)
   {
-    for (auto op : options_)
-      if (op == opt)
-        return true;
-    return false;
+    return options_.count(opt) > 0;
   }
 
   inline void ProcessCmdLine::showOptions()
   {
     for (auto opt : options_)
     {
-      *pOut_ << opt << " ";
+      *pOut_ << '/' << opt.first << " " << opt.second << " ";
     }
   }
 
@@ -205,53 +205,64 @@ namespace Utilities
 
   inline void ProcessCmdLine::maxItems(Number maxItems)
   {
-    maxItems_ = maxItems;
+    options_['n'] = std::to_string(maxItems);
   }
 
   inline ProcessCmdLine::Number ProcessCmdLine::maxItems()
   {
-    return maxItems_;
+    iterator iter = options_.find('n');
+    if (iter == options_.end())
+      return 0;
+    return std::stol(iter->second);
   }
 
   inline void ProcessCmdLine::showMaxItems()
   {
-    *pOut_ << maxItems_ << " ";
+    *pOut_ << maxItems() << " ";
   }
 
   /*----< regex operations >-----------------------------------------*/
 
   inline void ProcessCmdLine::regex(const Regex& rx)
   {
-    regex_ = rx;
+    options_['r'] = rx;
   }
 
   inline ProcessCmdLine::Regex ProcessCmdLine::regex()
   {
-    if (regex_ == "")
-      regex_ = ".*";
-    return regex_;
+    iterator iter = options_.find('R');
+    if (iter == options_.end())
+      return ".*";
+    if (iter->second == "")
+      parseError_ = true;
+    return iter->second;
   }
 
   inline void ProcessCmdLine::showRegex()
   {
-    *pOut_ << regex_ << " ";
+    *pOut_ << regex() << " ";
   }
 
   /*----< LogFile operations >---------------------------------------*/
 
   inline void ProcessCmdLine::logFile(const LogFile& lf)
   {
-    logFile_ = lf;
+    options_['F'] = lf;
   }
 
   inline ProcessCmdLine::LogFile ProcessCmdLine::logFile()
   {
-    return logFile_;
+    iterator iter = options_.find('F');
+    if (iter == options_.end())
+      return "";
+    if (iter->second == "")
+      parseError_ = true;
+    return iter->second;
   }
 
   inline void ProcessCmdLine::showLogFile()
   {
-    *pOut_ << logFile_ << " ";
+    *pOut_ << logFile() << " ";
   }
 
   /*----< parse operations >-----------------------------------------*/
@@ -275,20 +286,19 @@ namespace Utilities
     *pOut_ << "\n  patterns: ";
     preface("", false);
     showPatterns();
-    if (regex_ != "")
+    if (regex() != "")
     {
       *pOut_ << "\n  Regex:    ";
       preface("", false);
       showRegex();
-      //*pOut_ << regex_;
     }
-    if (logFile_ != "")
+    if (logFile() != "")
     {
       *pOut_ << "\n  LogFile:  ";
       preface("", false);
       showLogFile();
     }
-    if (maxItems_ > 0)
+    if (maxItems() > 0)
     {
       *pOut_ << "\n  maxItems: ";
       preface("", false);
@@ -299,57 +309,70 @@ namespace Utilities
 
   /*----< command line operations >----------------------------------*/
 
+  inline void ProcessCmdLine::process(int argc, char** argv)
+  {
+    argc_ = argc;
+    for (int i = 0; i < argc; ++i)
+    {
+      argv_[i] = argv[i];
+    }
+    process();
+  }
+
   inline void ProcessCmdLine::process()
   {
-    char lastOption = '\0';
-
     if (msg_.str() == "")
       defaultUsageMessage();
 
-    for (int i = 1; i < argc_; ++i)
+    int i = 1;
+    while (i < argc_)
     {
       if (argv_[i][0] == '/')
       {
-        lastOption = argv_[i][1];
-        if(
-          lastOption != 'P' && lastOption != 'p' && 
-          lastOption != 'n' && lastOption != 'R' && lastOption != 'F')
-          options_.push_back(lastOption);
+        options_[argv_[i][1]] = "";
       }
       else
       {
-        Patterns splits;
-        switch (lastOption)
-        {
-        case 'P':
-          path_ = argv_[i];
-          break;
-        case 'p':
-          splits = split(std::string(argv_[i]), ',');
-          for (auto patt : splits)
-            patterns_.push_back(patt);
-          break;
-        case 'n':
-          maxItems_ = atoi(argv_[i]);
-          break;
-        case 'R':
-          regex_ = argv_[i];
-          break;
-        case 'F':
-          logFile_ = argv_[i];
-          break;
-        case 'h':
-          usage();
-          break;
-        default:
-          break;
-        }
+        options_[argv_[i - 1][1]] = argv_[i];
+      }
+      ++i;
+    }
+    Patterns splits;
+    for (auto optItem : options_)
+    {
+      switch (optItem.first)
+      {
+      case 'P':
+        if (options_['P'] == "")
+          parseError_ = true;
+        break;
+      case 'p':
+        splits = split(optItem.second, ',');
+        for (auto patt : splits)
+          patterns_.push_back(patt);
+        break;
+      case 'n':
+        if (options_['n'] == "")
+          parseError_ = true;
+        break;
+      case 'R':
+        if (options_['R'] == "")
+          parseError_ = true;
+        break;
+      case 'F':
+        if (options_['F'] == "")
+          parseError_ = true;
+        break;
+      case 'h':
+        usage();
+        break;
+      default:
+        break;
       }
     }
-    // default path and patterns
 
-    if (path_ == "")
-      path_ = ".";
+    if (path() == "")
+      path(".");
     if (patterns_.size() == 0)
       patterns_.push_back("*.*");
   }

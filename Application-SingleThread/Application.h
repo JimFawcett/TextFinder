@@ -30,28 +30,28 @@
 #include <fstream>
 #include <string>
 #include "../TextSearch/TextSearch.h"
-
-class TextFinder;
+#include "../Executive-SingleThread/ITextFinder.h"
 
 class Application
 {
 public:
-  void textFinder(TextFinder* pTextFinder);
+  void textFinder(ITextFinder* pTextFinder);
   void searchText(const std::string& text);
   void hideDirNoMatch();
   void doDir(const std::string& dirName);
   void doFile(const std::string& fileName);
   void logFile(const std::string& logfile);
   void showAllInCurrDir(bool show);
+  void maxItems(int i);
   bool done();
   ~Application();
 private:
-  //TextSearch ts_;
-  TextFinder* pTextFinder_ = nullptr;
+  ITextFinder* pTextFinder_ = nullptr;
   bool showAll_ = false;
   std::string currDir_ = "";
   std::string text_ = "";
   bool hideDir_ = false;
   std::string logFile_ = "";
   std::ofstream logStream_;
+  int maxItems_ = 0;
 };

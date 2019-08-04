@@ -13,7 +13,7 @@
 
 //----< provide callback to TextFinder >---------------------------
 
-void Application::textFinder(TextFinder* pTextFinder)
+void Application::textFinder(ITextFinder* pTextFinder)
 {
   pTextFinder_ = pTextFinder;
 }
@@ -70,6 +70,12 @@ void Application::logFile(const std::string& logfile)
 void Application::showAllInCurrDir(bool show)
 {
   showAll_ = show;
+}
+//----< set number of items to process >---------------------------
+
+void Application::maxItems(int numItems)
+{
+  maxItems_ = numItems;
 }
 //----< Application is not responsible for stopping >--------------
 

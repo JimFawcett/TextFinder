@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////
 // TextFinder.cpp - Find text in files within a directory subtree  //
-// ver 1.2                                                         //
+// ver 1.3                                                         //
 //-----------------------------------------------------------------//
 // Jim Fawcett (c) copyright 2019                                  //
 // All rights granted provided this copyright notice is retained   //
@@ -20,14 +20,15 @@ std::string usageMsg()
   std::ostringstream out;
   out << "\n  TextFinder version 1.3, 24 Jun 2019";
   out << "\n  Finds files with text matching a regex\n";
-  out << "\n  usage: TextFinder /P path [/s] [/v] [/H] [/h] [/p pattern]* [/r regex]";
+  out << "\n  usage: TextFinder /P path [/s] [/v] [/H] [/h] [/p pattern]* [/r regex] [/F logfile]";
   out << "\n    path = relative or absolute path of starting directory";
   out << "\n    /s for recursive search";
   out << "\n    /v for verbose output - shows commandline processing results";
   out << "\n    /H for hide directories with no match";
   out << "\n    /h show this message and exit";
   out << "\n    pattern is a pattern string of the form *.h,*.log, etc. with no spaces";
-  out << "\n    regex is a regular expression specifying targets, e.g., files or dirs\n";
+  out << "\n    regex is a regular expression specifying targets, e.g., files or dirs";
+  out << "\n    logfile is the name of a file that captures all console output\n";
   out << "\n  Example: TextFinder /P .. /s /R \"TEST_ | #ifdef | #pragma once\" /p *.h,*.cpp\n";
   out << "\n  Note: regular expression string must be wrapped in quotes";
   out << "\n";
@@ -88,9 +89,9 @@ TextFinder::~TextFinder()
   if (logStream_.good())
     logStream_.close();
 }
-//----< configure TextFinder's DirExplorerT<Application> >-----------
+//----< process TextFinder's command line >--------------------------
 
-bool TextFinder::initialize(int argc, char* argv[])
+bool TextFinder::processCmdLine(int argc, char* argv[])
 {
   ProcessCmdLine pcl(argc, argv);
   pcl.setUsageMessage(usageMsg());
@@ -121,7 +122,9 @@ bool TextFinder::initialize(int argc, char* argv[])
       std::cout << "\n    optns = ";
       for (auto opt : pcl.options())
       {
-        std::cout << opt << " ";
+        std::cout << '/' << opt.first << " ";
+        if (opt.second != "")
+          std::cout << opt.second << " ";
       }
     }
     std::cout << "\n    regex = " << pcl.regex() << "\n";
@@ -144,31 +147,50 @@ bool TextFinder::initialize(int argc, char* argv[])
     logFile(pcl.logFile());
   }
 
-  std::string path = pcl.path();
+  // copy options and patterns from pcl to TextFinder's DirExplorerT instance
+  dirExplorer().pcl(pcl);
 
+  return pcl.parseError();
+}
+//----< configure TextFinder's DirExplorerT<Application> >-----------
+
+bool TextFinder::configureDirExplorerT()
+{
   DirExplorerT<Application>& deRef = dirExplorer();
 
-  deRef.path(path);
-  deRef.recurse(true);
-  for (auto patt : pcl.patterns())
-    deRef.addPattern(patt);
+  // pass interface callback reference which is given to DirExplorerT's app
+  // that allows app to use TextFinder's searchFile method
+  deRef.app().textFinder(this);
+
+  Utilities::ProcessCmdLine& pcl = deRef.pcl();
+
   deRef.hideEmptyDirectories(true);
   deRef.app().searchText(pcl.regex());
   if (pcl.hasOption('H'))
     deRef.app().hideDirNoMatch();
   if (pcl.logFile() != "")
     deRef.app().logFile(pcl.logFile());
+  return false;
+}
+//----< initialize TextFinder's DirExplorerT from CmdLine >----------
 
-  return true;
+bool TextFinder::initialize(int argc, char* argv[])
+{
+  bool p1 = processCmdLine(argc, argv);
+  bool p2 = configureDirExplorerT();
+  return p1 && p2;
 }
 //----< program entry point >----------------------------------------
 
 int main(int argc, char* argv[])
 {
   TextFinder tf;
-  tf.initialize(argc, argv);
+  bool error = tf.initialize(argc, argv);
+  if (error)
+    std::cout << "\n  error initializing TextFinder\n";
 
   tf.search();
+  tf.dirExplorer().showStats();
 
   std::cout << "\n\n";
 }

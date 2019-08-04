@@ -1,7 +1,7 @@
 #pragma once
 /////////////////////////////////////////////////////////////////////
 // TextFinder.h - Find text in files within a directory subtree    //
-// ver 1.2                                                         //
+// ver 1.3                                                         //
 //-----------------------------------------------------------------//
 // Jim Fawcett (c) copyright 2019                                  //
 // All rights granted provided this copyright notice is retained   //
@@ -26,6 +26,10 @@
 *
 * Maintenance History:
 * --------------------
+* ver 1.3 : 01 Aug 2019
+* - changed option storage to std::unordered_map.  That allows users to define
+*   custom options that may have a value as well as an option key.
+
 * ver 1.2 : 31 Jul 2019
 * - moved processing of searches from Application to TextFinder.  That entailed:
 *   - adding callback reference of TextFinder to Application.  Application finds
@@ -41,9 +45,10 @@
 
 #include <fstream>
 #include <regex>
+#include "ITextFinder.h"
 #include "../DirExplorer-Template/DirExplorerT.h"
 
-class TextFinder
+class TextFinder : public ITextFinder
 {
 public:
   bool initialize(int argc, char* argv[]);
@@ -56,6 +61,8 @@ public:
   void search();
   FileSystem::DirExplorerT<Application>& dirExplorer();
 private:
+  bool processCmdLine(int argc, char* argv[]);
+  bool configureDirExplorerT();
   std::ofstream logStream_;
   std::string regex_ = "";
   FileSystem::DirExplorerT<Application> de_;

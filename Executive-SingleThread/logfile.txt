@@ -53,5 +53,5 @@
   C:\github\JimFawcett\TextFinder\RegExDemo\RegExDemo.cpp
     found "TEST_|<regex>"
 
-  C:\github\JimFawcett\TextFinder\TextSearch\TestSearch.cpp
+  C:\github\JimFawcett\TextFinder\TextSearch\TextSearch.cpp
     found "TEST_|<regex>"

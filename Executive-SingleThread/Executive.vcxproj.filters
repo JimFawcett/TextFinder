@@ -26,5 +26,8 @@
     <ClInclude Include="..\Application-SingleThread\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ITextFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
