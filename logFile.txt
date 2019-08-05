@@ -1,7 +1,7 @@
 
                                       CodeAnalysis - Version 1.4
     ==============================================================================================
-     Thu Aug  1 10:44:45 2019
+     Sun Aug  4 19:03:49 2019
      Path: "C:\github\JimFawcett\TextFinder"
      Args: *.h, *.cpp, *.cs, /v, /m, /r, /f
                                                                                
@@ -10,13 +10,12 @@
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-                             namespace                   Global Namespace       1       1     757
-              public data: class TextFinder ; 
+                             namespace                   Global Namespace       1       1     771
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-             Application.h       class                        Application      37      21       1
-             Application.h       class                        Application      32      27      25
+             Application.h       class                        Application      36      22       1
+             Application.h       class                        Application      32      27      26
              Application.h    function                        Application      61       3       1
              Application.h    function                             doFile      65       7       2
              Application.h    function                              doDir      73       4       1
@@ -37,61 +36,63 @@
            Application.cpp    function                             doFile      39      22       4
            Application.cpp    function                            logFile      64       4       1
            Application.cpp    function                   showAllInCurrDir      71       3       1
-           Application.cpp    function                               done      77       3       1
-           Application.cpp    function                       ~Application      83       4       1
+           Application.cpp    function                           maxItems      77       3       1
+           Application.cpp    function                               done      83       3       1
+           Application.cpp    function                       ~Application      89       4       1
            Application.cpp    function                        customUsage      21      13       1
            Application.cpp    function                               main      36      50       7
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-           CodeUtilities.h   namespace                          Utilities      64     425      56
-           CodeUtilities.h    function                            preface      70       3       1
-           CodeUtilities.h       class                     ProcessCmdLine      79      53      41
-           CodeUtilities.h    function                     ProcessCmdLine      91       1       1
-           CodeUtilities.h    function                               path     135       4       1
-           CodeUtilities.h    function                               path     141       5       1
-           CodeUtilities.h    function                           showPath     148       3       1
-           CodeUtilities.h    function                             option     155       3       1
-           CodeUtilities.h    function                            options     159       4       1
-           CodeUtilities.h    function                          hasOption     165       3       1
-           CodeUtilities.h    function                        showOptions     170       6       2
-           CodeUtilities.h    function                            pattern     180       5       1
-           CodeUtilities.h    function                           patterns     187       5       1
-           CodeUtilities.h    function                       showPatterns     194       6       2
-           CodeUtilities.h    function                           maxItems     204       3       1
-           CodeUtilities.h    function                           maxItems     209       3       1
-           CodeUtilities.h    function                       showMaxItems     214       3       1
-           CodeUtilities.h    function                              regex     221       3       1
-           CodeUtilities.h    function                              regex     226       5       1
-           CodeUtilities.h    function                          showRegex     233       3       1
-           CodeUtilities.h    function                            logFile     240       3       1
-           CodeUtilities.h    function                            logFile     245       3       1
-           CodeUtilities.h    function                        showLogFile     250       3       1
-           CodeUtilities.h    function                         parseError     257       3       1
-           CodeUtilities.h    function                          showParse     262      34       5
-           CodeUtilities.h    function                            process     300      54       6
-           CodeUtilities.h    function                     ProcessCmdLine     355       2       1
-           CodeUtilities.h    function                        showCmdLine     359      13       2
-           CodeUtilities.h    function                defaultUsageMessage     374      16       1
-           CodeUtilities.h    function                    setUsageMessage     392       3       1
-           CodeUtilities.h    function                              usage     397       6       1
-           CodeUtilities.h       class                          Converter     412       5       3
-           CodeUtilities.h    function                           toString     421       5       1
-           CodeUtilities.h    function                            toValue     433       6       1
-           CodeUtilities.h       class                                Box     447       9       5
-           CodeUtilities.h    function                                Box     448       2       1
-           CodeUtilities.h    function                                Box     449       2       1
-           CodeUtilities.h    function                         operatorT&     450       2       1
-           CodeUtilities.h    function                          operator=     451       2       1
-           CodeUtilities.h      struct                              ToXml     462       4       2
-           CodeUtilities.h    function                             ~ToXml     463       1       1
-           CodeUtilities.h       class                     PersistFactory     475      14       3
-           CodeUtilities.h    function                     PersistFactory     479       3       1
-           CodeUtilities.h    function                              toXml     483       5       1
+           CodeUtilities.h   namespace                          Utilities      68     446      58
+           CodeUtilities.h       class                     ProcessCmdLine      74      51      43
+           CodeUtilities.h    function                     ProcessCmdLine      87       1       1
+           CodeUtilities.h    function                               path     137       4       1
+           CodeUtilities.h    function                               path     143       6       1
+           CodeUtilities.h    function                           showPath     151       3       1
+           CodeUtilities.h    function                             option     158       3       1
+           CodeUtilities.h    function                            options     162       4       1
+           CodeUtilities.h    function                          hasOption     168       3       1
+           CodeUtilities.h    function                        showOptions     173       6       2
+           CodeUtilities.h    function                            pattern     183       5       1
+           CodeUtilities.h    function                           patterns     190       5       1
+           CodeUtilities.h    function                       showPatterns     197       6       2
+           CodeUtilities.h    function                           maxItems     207       3       1
+           CodeUtilities.h    function                           maxItems     212       6       1
+           CodeUtilities.h    function                       showMaxItems     220       3       1
+           CodeUtilities.h    function                              regex     227       3       1
+           CodeUtilities.h    function                              regex     232       8       1
+           CodeUtilities.h    function                          showRegex     242       3       1
+           CodeUtilities.h    function                            logFile     249       3       1
+           CodeUtilities.h    function                            logFile     254       8       1
+           CodeUtilities.h    function                        showLogFile     264       3       1
+           CodeUtilities.h    function                         parseError     271       3       1
+           CodeUtilities.h    function                          showParse     276      33       5
+           CodeUtilities.h    function                            process     313       8       2
+           CodeUtilities.h    function                            process     323      56       6
+           CodeUtilities.h    function                     ProcessCmdLine     380       2       1
+           CodeUtilities.h    function                        showCmdLine     384      13       2
+           CodeUtilities.h    function                defaultUsageMessage     399      16       1
+           CodeUtilities.h    function                    setUsageMessage     417       3       1
+           CodeUtilities.h    function                              usage     422       6       1
+           CodeUtilities.h    function                            preface     131       3       1
+           CodeUtilities.h       class                          Converter     437       5       3
+           CodeUtilities.h    function                           toString     446       5       1
+           CodeUtilities.h    function                            toValue     458       6       1
+           CodeUtilities.h       class                                Box     472       9       5
+           CodeUtilities.h    function                                Box     473       2       1
+           CodeUtilities.h    function                                Box     474       2       1
+           CodeUtilities.h    function                         operatorT&     475       2       1
+           CodeUtilities.h    function                          operator=     476       2       1
+           CodeUtilities.h      struct                              ToXml     487       4       2
+           CodeUtilities.h    function                             ~ToXml     488       1       1
+           CodeUtilities.h       class                     PersistFactory     500      14       3
+           CodeUtilities.h    function                     PersistFactory     504       3       1
+           CodeUtilities.h    function                              toXml     508       5       1
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-         CodeUtilities.cpp    function                               main      21      74       1
+         CodeUtilities.cpp    function                               main      21      83       1
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
@@ -218,32 +219,36 @@
             DirExplorerT.h    function                           dirCount     212       3       1
             DirExplorerT.h    function                          showStats     219       3       1
             DirExplorerT.h    function                               done     225       3       1
-            DirExplorerT.h   namespace                         FileSystem      51     199      26
-            DirExplorerT.h       class                       DirExplorerT      54      38      25
-            DirExplorerT.h    function                            version      57       2       1
-            DirExplorerT.h    function                                app      78       2       1
-            DirExplorerT.h    function                       DirExplorerT      97       3       1
-            DirExplorerT.h    function                       DirExplorerT     104       3       1
-            DirExplorerT.h    function                               path     111       3       1
-            DirExplorerT.h    function                         addPattern     118       6       1
-            DirExplorerT.h    function               hideEmptyDirectories     128       3       1
-            DirExplorerT.h    function                           maxItems     135       4       1
-            DirExplorerT.h    function                   showAllInCurrDir     143       3       1
-            DirExplorerT.h    function                   showAllInCurrDir     150       3       1
-            DirExplorerT.h    function                            recurse     157       3       1
-            DirExplorerT.h    function                             search     164       6       1
-            DirExplorerT.h    function                               find     177      46       8
-            DirExplorerT.h    function                          fileCount     227       3       1
-            DirExplorerT.h    function                           dirCount     234       3       1
-            DirExplorerT.h    function                          showStats     241       3       1
-            DirExplorerT.h    function                               done     247       3       1
+            DirExplorerT.h   namespace                         FileSystem      58     249      33
+            DirExplorerT.h       class                       DirExplorerT      61      41      32
+            DirExplorerT.h    function                            version      65       2       1
+            DirExplorerT.h    function                                app      88       2       1
+            DirExplorerT.h    function                                pcl     106       3       1
+            DirExplorerT.h    function                                pcl     113      11       3
+            DirExplorerT.h    function                       DirExplorerT     128       3       1
+            DirExplorerT.h    function                       DirExplorerT     135       4       1
+            DirExplorerT.h    function                               path     143       3       1
+            DirExplorerT.h    function                         addPattern     150       6       1
+            DirExplorerT.h    function                           patterns     160       3       1
+            DirExplorerT.h    function                           patterns     167       6       2
+            DirExplorerT.h    function               hideEmptyDirectories     177       3       1
+            DirExplorerT.h    function                           maxItems     184       4       1
+            DirExplorerT.h    function                   showAllInCurrDir     192       3       1
+            DirExplorerT.h    function                   showAllInCurrDir     199       3       1
+            DirExplorerT.h    function                            recurse     206       6       1
+            DirExplorerT.h    function                             search     216       6       1
+            DirExplorerT.h    function                               find     229      48       8
+            DirExplorerT.h    function                          fileCount     281       3       1
+            DirExplorerT.h    function                           dirCount     288       3       1
+            DirExplorerT.h    function                          showStats     295       4       1
+            DirExplorerT.h    function                               done     302       5       1
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
           DirExplorerT.cpp    function                        customUsage      20      13       1
           DirExplorerT.cpp    function                               main      35      50       7
           DirExplorerT.cpp    function                        customUsage      22      13       1
-          DirExplorerT.cpp    function                               main      37      50       7
+          DirExplorerT.cpp    function                               main      37      51       7
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
@@ -457,6 +462,11 @@
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
+             ITextFinder.h      struct                        ITextFinder      15       4       2
+             ITextFinder.h    function                       ~ITextFinder      15       2       1
+
+                 file name        type                               name    line    size    cplx
+    -----------------------  ----------  ---------------------------------  ------  ------  ------
               Properties.h   namespace                          Utilities      38      36       6
               Properties.h       class                           Property      41      32       5
               Properties.h    function                          ~Property      42       2       1
@@ -543,14 +553,6 @@
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-            TestSearch.cpp    function                               open      19      10       2
-            TestSearch.cpp    function                               find      30      11       1
-            TestSearch.cpp    function                              close      43       3       1
-            TestSearch.cpp    function                        ~TextSearch      48       3       1
-            TestSearch.cpp    function                               main      54      28       1
-
-                 file name        type                               name    line    size    cplx
-    -----------------------  ----------  ---------------------------------  ------  ------  ------
            TestUtilities.h       class                       TestExecutor      47       6       5
            TestUtilities.h    function                            execute      57      16       3
            TestUtilities.h    function                              check      77       6       1
@@ -571,25 +573,35 @@
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-              TextFinder.h       class                         TextFinder      50      16      19
+              TextFinder.h       class                         TextFinder      52      18      21
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-            TextFinder.cpp    function                              usage      39       3       1
-            TextFinder.cpp    function                               path      45       3       1
-            TextFinder.cpp    function                        searchRegEx      51       3       1
-            TextFinder.cpp    function                        dirExplorer      57       3       1
-            TextFinder.cpp    function                         searchFile      63       7       1
-            TextFinder.cpp    function                             search      73       4       1
-            TextFinder.cpp    function                            logFile      80       4       1
-            TextFinder.cpp    function                        ~TextFinder      87       4       1
-            TextFinder.cpp    function                         initialize      94      72      10
-            TextFinder.cpp    function                           usageMsg      19      17       1
-            TextFinder.cpp    function                               main     169       8       1
+            TextFinder.cpp    function                              usage      40       3       1
+            TextFinder.cpp    function                               path      46       3       1
+            TextFinder.cpp    function                        searchRegEx      52       3       1
+            TextFinder.cpp    function                        dirExplorer      58       3       1
+            TextFinder.cpp    function                         searchFile      64       7       1
+            TextFinder.cpp    function                             search      74       4       1
+            TextFinder.cpp    function                            logFile      81       4       1
+            TextFinder.cpp    function                        ~TextFinder      88       4       1
+            TextFinder.cpp    function                     processCmdLine      95      60      10
+            TextFinder.cpp    function              configureDirExplorerT     158      17       1
+            TextFinder.cpp    function                         initialize     178       5       1
+            TextFinder.cpp    function                           usageMsg      19      18       1
+            TextFinder.cpp    function                               main     186      11       1
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
               TextSearch.h       class                         TextSearch      16       9       6
+
+                 file name        type                               name    line    size    cplx
+    -----------------------  ----------  ---------------------------------  ------  ------  ------
+            TextSearch.cpp    function                               open      19      10       2
+            TextSearch.cpp    function                               find      30      11       1
+            TextSearch.cpp    function                              close      43       3       1
+            TextSearch.cpp    function                        ~TextSearch      48       3       1
+            TextSearch.cpp    function                               main      54      28       1
 
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
@@ -606,24 +618,23 @@
     ==============================================================================================
                  file name        type                               name    line    size    cplx
     -----------------------  ----------  ---------------------------------  ------  ------  ------
-           CodeUtilities.h    function                            process     300      54       6
-         CodeUtilities.cpp    function                               main      21      74       1
+           CodeUtilities.h    function                            process     323      56       6
+         CodeUtilities.cpp    function                               main      21      83       1
               DateTime.cpp    function                           DateTime      60      28      15
               DateTime.cpp    function                           DateTime      56      28      15
           DirExplorerE.cpp    function                               main      81      57       7
+          DirExplorerT.cpp    function                               main      37      51       7
             FileSystem.cpp    function                               main     775     399      31
             FileSystem.cpp    function                               main     775     399      31
        SingletonLogger.cpp    function                                         33      66       1
        SingletonLogger.cpp    function                               main      34      66       1
-            TextFinder.cpp    function                         initialize      94      72      10
+            TextFinder.cpp    function                     processCmdLine      95      60      10
 
-              public data: Application.h : 34 - namespace Global Namespace
-                class TextFinder ; 
               public data: TestUtilities.h : 93 - struct {
                 Test test ; 
               public data: TestUtilities.h : 94 - struct {
                 std :: string testName ; 
 
 
-    searched   308 dirs
-   processed    47 files
+    searched   330 dirs
+   processed    48 files

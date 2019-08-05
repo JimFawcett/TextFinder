@@ -5,7 +5,7 @@
 // Jim Fawcett (c) copyright 2015                                  //
 // All rights granted provided this copyright notice is retained   //
 //-----------------------------------------------------------------//
-// Jim Fawcett, CSE687 - Object Oriented Design, Fall 2018         //
+// Jim Fawcett, Emeritus Teaching Professor, Syracuse University   //
 /////////////////////////////////////////////////////////////////////
 
 #include "Application.h"

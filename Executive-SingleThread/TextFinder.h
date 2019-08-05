@@ -1,12 +1,12 @@
 #pragma once
 /////////////////////////////////////////////////////////////////////
 // TextFinder.h - Find text in files within a directory subtree    //
-// ver 1.3                                                         //
+// ver 1.3 - 01 August 2019                                        //
 //-----------------------------------------------------------------//
 // Jim Fawcett (c) copyright 2019                                  //
 // All rights granted provided this copyright notice is retained   //
 //-----------------------------------------------------------------//
-// Jim Fawcett, CSE687 - Object Oriented Design, Fall 2018         //
+// Jim Fawcett, Emeritus Teaching Professor, Syracuse University   //
 /////////////////////////////////////////////////////////////////////
 /*
 * Package Operations:
@@ -51,8 +51,11 @@
 class TextFinder : public ITextFinder
 {
 public:
+  TextFinder();
   bool initialize(int argc, char* argv[]);
   ~TextFinder();
+  TextFinder(const TextFinder& tf) = delete;
+  TextFinder& operator=(const TextFinder& tf) = delete;
   void usage();
   void path(const std::string& path);
   bool logFile(const std::string& logfile);

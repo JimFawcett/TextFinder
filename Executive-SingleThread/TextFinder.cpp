@@ -1,11 +1,11 @@
 /////////////////////////////////////////////////////////////////////
 // TextFinder.cpp - Find text in files within a directory subtree  //
-// ver 1.3                                                         //
+// ver 1.3 - 01 August 2019                                        //
 //-----------------------------------------------------------------//
 // Jim Fawcett (c) copyright 2019                                  //
 // All rights granted provided this copyright notice is retained   //
 //-----------------------------------------------------------------//
-// Jim Fawcett, CSE687 - Object Oriented Design, Fall 2018         //
+// Jim Fawcett, Emeritus Teaching Professor, Syracuse University   //
 /////////////////////////////////////////////////////////////////////
 
 #include <iostream>
@@ -18,7 +18,7 @@ using namespace Utilities;
 std::string usageMsg()
 {
   std::ostringstream out;
-  out << "\n  TextFinder version 1.3, 24 Jun 2019";
+  out << "\n  TextFinder version 1.3, 05 Aug 2019";
   out << "\n  Finds files with text matching a regex\n";
   out << "\n  usage: TextFinder /P path [/s] [/v] [/H] [/h] [/p pattern]* [/r regex] [/F logfile]";
   out << "\n    path = relative or absolute path of starting directory";
@@ -33,6 +33,12 @@ std::string usageMsg()
   out << "\n  Note: regular expression string must be wrapped in quotes";
   out << "\n";
   return out.str();
+}
+//----< provide callback >-------------------------------------------
+
+TextFinder::TextFinder()
+{
+  de_.app().textFinder(this);  // give callback reference to Application
 }
 //----< set custom usage message >-----------------------------------
 
@@ -72,8 +78,7 @@ bool TextFinder::searchFile(const std::string& searchfile)
 
 void TextFinder::search()
 {
-  de_.app().textFinder(this);  // give callback reference to Application
-  de_.search();                // start DirExplorerT<App> search
+  de_.search();   // delegate to DirExplorerT<Application> instance
 }
 //----< attempt to open logfile >------------------------------------
 
@@ -93,6 +98,8 @@ TextFinder::~TextFinder()
 
 bool TextFinder::processCmdLine(int argc, char* argv[])
 {
+  // default processing
+  
   ProcessCmdLine pcl(argc, argv);
   pcl.setUsageMessage(usageMsg());
   pcl.process();
@@ -102,13 +109,14 @@ bool TextFinder::processCmdLine(int argc, char* argv[])
     usage();
     return false;
   }
+  // processing specific to TextFinder
+
   if (pcl.hasOption('v'))
   {
     std::cout << "\n  TextFinder";
-
     pcl.showCmdLine(argc, argv, true);
-
     std::cout << "\n    path  = " << pcl.path();
+
     if (pcl.patterns().size() > 0)
     {
       std::cout << "\n    patts = ";
@@ -136,9 +144,11 @@ bool TextFinder::processCmdLine(int argc, char* argv[])
 
   if (pcl.hasOption('h'))
   {
-    usage();
+    //usage();
     return false;
   }
+
+  // set regular expression used for search
 
   searchRegEx(pcl.regex());
 
@@ -148,6 +158,7 @@ bool TextFinder::processCmdLine(int argc, char* argv[])
   }
 
   // copy options and patterns from pcl to TextFinder's DirExplorerT instance
+ 
   dirExplorer().pcl(pcl);
 
   return pcl.parseError();
@@ -160,8 +171,8 @@ bool TextFinder::configureDirExplorerT()
 
   // pass interface callback reference which is given to DirExplorerT's app
   // that allows app to use TextFinder's searchFile method
-  deRef.app().textFinder(this);
 
+  deRef.app().textFinder(this);
   Utilities::ProcessCmdLine& pcl = deRef.pcl();
 
   deRef.hideEmptyDirectories(true);

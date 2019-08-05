@@ -1,12 +1,12 @@
 #pragma once
 /////////////////////////////////////////////////////////////////////
 // DirExplorerT.h - Template-based directory explorer              //
-// ver 1.2                                                         //
+// ver 1.3                                                         //
 //-----------------------------------------------------------------//
 // Jim Fawcett (c) copyright 2015                                  //
 // All rights granted provided this copyright notice is retained   //
 //-----------------------------------------------------------------//
-// Jim Fawcett, CSE687 - Object Oriented Design, Fall 2018         //
+// Jim Fawcett, Emeritus Teaching Professor, Syracuse University   //
 /////////////////////////////////////////////////////////////////////
 /*
 * Package Operations:
@@ -22,10 +22,6 @@
 * a template type parameter to supply those methods.
 * This is an improvement over DirExplorerN because the application
 * does not need to change any part of the DirExplorerT class.
-*
-* Two other projects in this solution also do that, in different
-* ways.  We'll be using this solution to illustrate techniques for
-* building flexible software.
 *
 * Required Files:
 * ---------------

@@ -1,12 +1,13 @@
 #pragma once
-///////////////////////////////////////////////////////////////////////
-// CodeUtilities.h - small, generally useful, helper classes         //
-// ver 1.7                                                           //
-// Language:    C++, Visual Studio 2017                              //
-// Application: Most Projects, CSE687 - Object Oriented Design       //
-// Author:      Jim Fawcett, Syracuse University, CST 4-187          //
-//              jfawcett@twcny.rr.com                                //
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+// CodeUtilities.h - small, generally useful, helper classes       //
+// ver 1.7                                                         //
+//-----------------------------------------------------------------//
+// Jim Fawcett (c) copyright 2019                                  //
+// All rights granted provided this copyright notice is retained   //
+//-----------------------------------------------------------------//
+// Jim Fawcett, Emeritus Teaching Professor, Syracuse University   //
+/////////////////////////////////////////////////////////////////////
 /*
 * Package Operations:
 * -------------------
@@ -86,6 +87,8 @@ namespace Utilities
 
     ProcessCmdLine(int argc, char** argv, std::ostream& out = std::cout);
     ProcessCmdLine() : pOut_(&std::cout) {};
+    ProcessCmdLine(const ProcessCmdLine& pcl) = delete;
+    ProcessCmdLine& operator=(const ProcessCmdLine& pcl) = delete;
     void process();
     void process(int argc, char** argv);
     bool parseError();

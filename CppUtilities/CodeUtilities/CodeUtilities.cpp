@@ -1,11 +1,12 @@
-///////////////////////////////////////////////////////////////////////
-// CodeUtilities.cpp - small, generally useful, helper classes       //
-// ver 1.7                                                           //
-// Language:    C++, Visual Studio 2017                              //
-// Application: Most Projects, CSE687 - Object Oriented Design       //
-// Author:      Jim Fawcett, Syracuse University, CST 4-187          //
-//              jfawcett@twcny.rr.com                                //
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+// CodeUtilities.cpp - small, generally useful, helper classes     //
+// ver 1.7                                                         //
+//-----------------------------------------------------------------//
+// Jim Fawcett (c) copyright 2019                                  //
+// All rights granted provided this copyright notice is retained   //
+//-----------------------------------------------------------------//
+// Jim Fawcett, Emeritus Teaching Professor, Syracuse University   //
+/////////////////////////////////////////////////////////////////////
 
 #include "CodeUtilities.h"
 #include "../StringUtilities/StringUtilities.h"

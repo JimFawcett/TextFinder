@@ -5,7 +5,7 @@
 // Jim Fawcett (c) copyright 2019                                  //
 // All rights granted provided this copyright notice is retained   //
 //-----------------------------------------------------------------//
-// Jim Fawcett, CSE687 - Object Oriented Design, Fall 2018         //
+// Jim Fawcett, Emeritus Teaching Professor, Syracuse University   //
 /////////////////////////////////////////////////////////////////////
 
 #include "TextSearch.h"
@@ -33,10 +33,6 @@ bool TextSearch::find(const std::string& regexStr)
   contents << in_.rdbuf();
   in_.close();
   return std::regex_search(contents.str(), re);
-  //std::string temp = contents.str();
-  //size_t pos = temp.find(regexStr);
-  //in_.close();
-  //return pos != std::string::npos;
 }
 
 void TextSearch::close()

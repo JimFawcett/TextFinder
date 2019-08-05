@@ -6,25 +6,27 @@
 // Jim Fawcett (c) copyright 2015                                  //
 // All rights granted provided this copyright notice is retained   //
 //-----------------------------------------------------------------//
-// Jim Fawcett, CSE687 - Object Oriented Design, Fall 2018         //
+// Jim Fawcett, Emeritus Teaching Professor, Syracuse University   //
 /////////////////////////////////////////////////////////////////////
 /*
 *  Package Operations:
 *  -------------------
-*  Provides the Application class that implements the application
-*  specific parts of navigation for Textfinder, e.g., how to handle
-*  file and directory discovery.
+*  Provides Application class that implements application specific
+*  parts of navigation for Textfinder, e.g., how to handle file
+*  and directory discovery.
+*
+*  Holds an interface pointer to TextFinder to use it's searchFile
+*  method.
 *
 *  Required Files:
 *  ---------------
-*  Application.h
+*  Application.h, Application.cpp
+*  TextFinder.h, TextFinder.cpp
 *
 *  Notes:
 *  - Application creates an instance of TextSearch and uses it for
 *    each discovered file, so Executive doesn't need to know about
-*    that class.
-*  - This is a header only package.  Just include it in the same folder
-*    as DirExplorerT.
+*    that class.  It does that by delegating to TextFinder::searchFile(...).
 */
 #include <iostream>
 #include <fstream>
@@ -35,6 +37,9 @@
 class Application
 {
 public:
+  Application() {}
+  Application(const Application& app) = delete;
+  Application& operator=(const Application& app) = delete;
   void textFinder(ITextFinder* pTextFinder);
   void searchText(const std::string& text);
   void hideDirNoMatch();
