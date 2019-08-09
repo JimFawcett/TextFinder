@@ -20,14 +20,14 @@ std::string usageMsg()
   std::ostringstream out;
   out << "\n  TextFinder version 1.3, 05 Aug 2019";
   out << "\n  Finds files with text matching a regex\n";
-  out << "\n  usage: TextFinder /P path [/s] [/v] [/H] [/h] [/p pattern]* [/r regex] [/F logfile]";
+  out << "\n  usage: TextFinder /P path [/s] [/v] [/H] [/h] [/p pattern]* [/R regex] [/F logfile]";
   out << "\n    path = relative or absolute path of starting directory";
   out << "\n    /s for recursive search";
   out << "\n    /v for verbose output - shows commandline processing results";
   out << "\n    /H for hide directories with no match";
   out << "\n    /h show this message and exit";
   out << "\n    pattern is a pattern string of the form *.h,*.log, etc. with no spaces";
-  out << "\n    regex is a regular expression specifying targets, e.g., files or dirs";
+  out << "\n    regex is a quoted regular expression string specifying targets, e.g., files or dirs";
   out << "\n    logfile is the name of a file that captures all console output\n";
   out << "\n  Example: TextFinder /P .. /s /R \"TEST_ | #ifdef | #pragma once\" /p *.h,*.cpp\n";
   out << "\n  Note: regular expression string must be wrapped in quotes";
