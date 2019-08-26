@@ -20,6 +20,9 @@
   C:\github\JimFawcett\TextFinder\CppUtilities\FileSystem\FileSystem.cpp
     found "TEST_|<regex>"
 
+  C:\github\JimFawcett\TextFinder\CppUtilities\old\CodeUtilities\CodeUtilities.cpp
+    found "TEST_|<regex>"
+
   C:\github\JimFawcett\TextFinder\CppUtilities\old\SingletonLogger-old\CppDateTime\DateTime.cpp
     found "TEST_|<regex>"
 

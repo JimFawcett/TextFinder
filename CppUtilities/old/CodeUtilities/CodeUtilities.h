@@ -63,7 +63,6 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-#include <memory>
 #include "..//StringUtilities/StringUtilities.h"
 
 namespace Utilities
@@ -119,7 +118,7 @@ namespace Utilities
   private:
     void defaultUsageMessage();
     int argc_ = 0;
-    std::vector<char*> argv_;
+    char** argv_ = nullptr;
     Patterns patterns_ = Patterns();
     Options options_ = Options();
     bool parseError_ = false;
@@ -318,11 +317,6 @@ namespace Utilities
     argc_ = argc;
     for (int i = 0; i < argc; ++i)
     {
-      argv_.push_back(argv[i]);
-    }
-    for (int i = 0; i < argc; ++i)
-    {
-      char* ptr = argv[i];
       argv_[i] = argv[i];
     }
     process();
@@ -333,7 +327,7 @@ namespace Utilities
     if (msg_.str() == "")
       defaultUsageMessage();
 
-    size_t i = 1;
+    int i = 1;
     while (i < argc_)
     {
       if (argv_[i][0] == '/')
@@ -387,7 +381,7 @@ namespace Utilities
   }
 
   inline ProcessCmdLine::ProcessCmdLine(int argc, char** argv, std::ostream& out)
-    : argc_(argc), argv_(std::vector<char*>(argv, argv+argc)), pOut_(&out) {}
+    : argc_(argc), argv_(argv), pOut_(&out) {}
 
   inline void ProcessCmdLine::showCmdLine(int argc, char** argv, bool showFirst)
   {
